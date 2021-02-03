@@ -1,5 +1,4 @@
 requests
-re
 rsa
 base64
 pytz
