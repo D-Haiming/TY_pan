@@ -1,13 +1,12 @@
-# !/usr/bin/env python
 # coding=utf-8
 import os, requests, time, re, rsa, base64, pytz, datetime
 from io import StringIO
 
 s = requests.Session()
 
+SCKEY = os.environ['PUSHSCKEY']
 username = os.environ['USERNAME']
 password = os.environ['PASSWORD']
-SCKEY =os.environ['PUSHSCKEY']
 
 #SERVER酱微信推送url
 scurl = f"https://sc.ftqq.com/{SCKEY}.send"
