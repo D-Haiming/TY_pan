@@ -25,5 +25,7 @@ jobs:
       - name: Working
         env:
           PUSHSCKEY: ${{secrets.PUSHSCKEY}}
+          USERNAME: ${{secrets.USERNAME}}
+          PASSWORD: ${{secrets.PASSWORD}}
         run: 
           python ./code/TY_pan.py
