@@ -2,8 +2,9 @@ name: main test
 
 on: 
   push：
+  workflow_dispatch:
   schedule:
-    -cron: '50 30 * * *'
+    - cron: '50 30 * * *'
 
 jobs:
   TY_pan-daily:
