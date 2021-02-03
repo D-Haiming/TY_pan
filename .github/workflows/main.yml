@@ -1,7 +1,6 @@
 name: main test
 
 on: 
-  push：
   workflow_dispatch:
   schedule:
     - cron: '50 30 * * *'
