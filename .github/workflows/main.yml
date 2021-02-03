@@ -1,4 +1,4 @@
-name: main test
+name: TY_pan-daily-task
 
 on: 
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: '21 21 * * *'
 
 jobs:
-  TY_pan-daily:
+  run-TY_pan-tool:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
