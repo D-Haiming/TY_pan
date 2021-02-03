@@ -3,7 +3,7 @@ name: main test
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '50 30 * * *'
+    - cron: '21 21 * * *'
 
 jobs:
   TY_pan-daily:
