@@ -2,10 +2,8 @@ name: TY_pan-daily-task
 
 on: 
   push:
-    branches: 
-      - master
   schedule:
-    - cron: '30 3 * * *'
+    - cron: 42 3 * * *
 
 jobs:
   run-TY_pan-tool:
