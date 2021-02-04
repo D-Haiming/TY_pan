@@ -3,7 +3,7 @@ name: TY_pan-daily-task
 on: 
   push:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '22 22 * * *'
 
 jobs:
   run-TY_pan-tool:
