@@ -19,7 +19,7 @@ tz = pytz.timezone('Asia/Shanghai')
 nowtime = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 sio.write("--------------------------"+nowtime+"----------------------------\n\n")
 sio.write('休眠时间：')
-sio.write(sleep_time+'分钟')
+sio.write(str(sleep_time)+'分钟')
 sio.write('\n\n')
 
 def main(arg1,arg2):
