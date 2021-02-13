@@ -1,5 +1,5 @@
 # coding=utf-8
-import os, requests, time, re, rsa, base64, pytz, datetime
+import os, requests, time, re, rsa, base64, pytz, datetime,random
 from io import StringIO
 
 s = requests.Session()
@@ -9,7 +9,9 @@ username = os.environ['USERNAME']
 password = os.environ['PASSWORD']
 
 #SERVER酱微信推送url
-scurl = f"https://sc.ftqq.com/{SCKEY}.send"
+scurl = f"https://sctapi.ftqq.com/{SCKEY}.send"
+#程序休眠时间
+sleep_time=random.randint(11,22)
 
 # 初始化日志
 sio = StringIO('天翼云盘签到日志\n\n')
@@ -17,7 +19,9 @@ sio.seek(0, 2)  # 将读写位置移动到结尾
 tz = pytz.timezone('Asia/Shanghai')
 nowtime = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 sio.write("--------------------------"+nowtime+"----------------------------\n\n")
-
+sio.write('休眠时间：')
+sio.write(sleep_time+'分钟')
+sio.write('\n\n')
 
 def main(arg1,arg2):
     if(username == "" or password == ""):
@@ -191,4 +195,5 @@ def pushWechat(desp,nowtime):
 if __name__ == "__main__":
     arg1 = 0
     arg2 = 0
+    time.sleep(random.randint(11,22)*60)
     main(arg1,arg2)
