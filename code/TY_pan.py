@@ -9,7 +9,7 @@ username = os.environ['USERNAME']
 password = os.environ['PASSWORD']
 
 #SERVER酱微信推送url
-scurl = f"https://sc.ftqq.com/{SCKEY}.send"
+scurl = f"https://sctapi.ftqq.com/{SCKEY}.send"
 
 # 初始化日志
 sio = StringIO('天翼云盘签到日志\n\n')
