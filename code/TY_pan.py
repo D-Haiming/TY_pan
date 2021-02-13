@@ -12,7 +12,6 @@ password = os.environ['PASSWORD']
 scurl = f"https://sctapi.ftqq.com/{SCKEY}.send"
 #程序休眠时间
 sleep_time=random.randint(11,22)
-
 # 初始化日志
 sio = StringIO('天翼云盘签到日志\n\n')
 sio.seek(0, 2)  # 将读写位置移动到结尾
