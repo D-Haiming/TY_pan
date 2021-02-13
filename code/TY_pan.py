@@ -11,7 +11,7 @@ password = os.environ['PASSWORD']
 #SERVER酱微信推送url
 scurl = f"https://sctapi.ftqq.com/{SCKEY}.send"
 #程序休眠时间
-sleep_time=random.randint(2,11)*60
+sleep_time=random.randint(2,11)
 # 初始化日志
 sio = StringIO('天翼云盘签到日志\n\n')
 sio.seek(0, 2)  # 将读写位置移动到结尾
@@ -194,5 +194,5 @@ def pushWechat(desp,nowtime):
 if __name__ == "__main__":
     arg1 = 0
     arg2 = 0
-    time.sleep(sleep_time)
+    time.sleep(sleep_time*60)
     main(arg1,arg2)
