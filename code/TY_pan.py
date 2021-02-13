@@ -195,5 +195,5 @@ def pushWechat(desp,nowtime):
 if __name__ == "__main__":
     arg1 = 0
     arg2 = 0
-    time.sleep(random.randint(11,22)*60)
+    time.sleep(sleep_time)
     main(arg1,arg2)
