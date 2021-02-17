@@ -1,26 +1,40 @@
 # coding=utf-8
-import os, requests, time, re, rsa, base64, pytz, datetime,random
+import os,requests, time, re, rsa, base64, pytz, datetime,random,json
 from io import StringIO
 
 s = requests.Session()
 
-SCKEY = os.environ['PUSHSCKEY']
-username = os.environ['USERNAME']
-password = os.environ['PASSWORD']
+username=os.environ['USERNAME']
+password=os.environ['PASSWORD']
+corpid=os.environ['CORPID']
+agentid=os.environ['AGENTID']
+corpsecret=os.environ['CORPSECRET']
 
-#SERVER酱微信推送url
-scurl = f"https://sctapi.ftqq.com/{SCKEY}.send"
 #程序休眠时间
 sleep_time=random.randint(2,11)
 # 初始化日志
-sio = StringIO('天翼云盘签到日志\n\n')
+sio = StringIO('Chlorine’s 天翼云盘签到日志\n\n')
 sio.seek(0, 2)  # 将读写位置移动到结尾
 tz = pytz.timezone('Asia/Shanghai')
 nowtime = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
-sio.write("--------------------------"+nowtime+"----------------------------\n\n")
+sio.write("签到时间："+nowtime+'\n\n')
 sio.write('休眠时间：')
 sio.write(str(sleep_time)+'分钟')
 sio.write('\n\n')
+
+def get_token():
+    payload_access_token = {'corpid': corpid, 'corpsecret': corpsecret}
+    token_url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
+    r = requests.get(token_url, params=payload_access_token)
+    dict_result = (r.json())
+    return dict_result['access_token']
+
+def send_message(message):
+    url = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=%s" % get_token()
+    data = {"touser":'@all', "msgtype": "text", "agentid": agentid, "text": {"content": message}, "safe": 0}
+    data = json.dumps(data, ensure_ascii=False)
+    r = requests.post(url=url, data=data.encode("utf-8").decode("latin1"))
+    return r.json()
 
 def main(arg1,arg2):
     if(username == "" or password == ""):
@@ -28,8 +42,6 @@ def main(arg1,arg2):
         desp = sio.getvalue()
         pushWechat(desp,nowtime)
         return None
-    #    username = input("账号：")
-    #    password = input("密码：")
     msg = login(username, password)
     if(msg == "error"):
         desp = sio.getvalue()
@@ -51,9 +63,9 @@ def main(arg1,arg2):
     response = s.get(surl,headers=headers)
     netdiskBonus = response.json()['netdiskBonus']
     if(response.json()['isSign'] == "false"):
-        sio.write(f"签到提示：未签到，签到获得{netdiskBonus}M空间\n\n")
+        sio.write(f"签到提示：未签到，获得{netdiskBonus}M\n\n")
     else:
-        sio.write(f"签到提示：已经签到过了，签到获得{netdiskBonus}M空间\n\n")
+        sio.write(f"签到提示：已签到，已获得{netdiskBonus}M\n\n")
     headers = {
         'User-Agent':'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
         "Referer" : "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -85,7 +97,7 @@ def main(arg1,arg2):
         description = response.json()['description']
         sio.write(f"第二次抽奖：抽奖获得{description}\n\n")
     desp = sio.getvalue()
-    pushWechat(desp,nowtime)
+    pushWechat(desp)
     return desp
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
@@ -120,7 +132,6 @@ def b64tohex(a):
     if e == 1:
         d += int2char(c << 2)
     return d
-
 
 def rsa_encode(j_rsakey, string):
     rsa_key = f"-----BEGIN PUBLIC KEY-----\n{j_rsakey}\n-----END PUBLIC KEY-----"
@@ -162,7 +173,7 @@ def login(username, password):
         sio.write(r.json()['msg'])
         sio.write("\n\n")
     else:
-        if(SCKEY == ""):
+        if(corpid == "")or(agentid=='')or(corpsecret==''):
             sio.write("登录提示：")
             sio.write(r.json()['msg'])
             sio.write("\n\n")
@@ -178,18 +189,11 @@ def login(username, password):
     return s
     
 # 微信推送
-def pushWechat(desp,nowtime):
+def pushWechat(desp):
     if '失败' in desp :
-        params = {
-            'text': '天翼云盘签到失败提醒',
-            'desp': desp
-            }
-    else:
-        params = {
-            'text': '天翼云盘签到提醒',
-            'desp': desp
-    }
-    requests.post(scurl,params=params)
+        send_message('Chlorine’s 天翼云盘签到失败！')
+    else: 
+        send_message(desp)
 
 if __name__ == "__main__":
     arg1 = 0
