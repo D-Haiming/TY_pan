@@ -24,7 +24,9 @@ jobs:
       
       - name: Working
         env:
-          PUSHSCKEY: ${{secrets.PUSHSCKEY}}
+          CORPID: ${{secrets.CORPID}}
+          AGENTID: ${{secrets.AGENTID}}
+          CORPSECRET: ${{secrets.CORPSECRET}}
           USERNAME: ${{secrets.USERNAME}}
           PASSWORD: ${{secrets.PASSWORD}}
         run: 
