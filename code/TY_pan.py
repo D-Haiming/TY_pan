@@ -13,7 +13,7 @@ corpsecret=os.environ['CORPSECRET']
 #程序休眠时间
 sleep_time=random.randint(2,11)
 # 初始化日志
-sio = StringIO('Chlorine’s 天翼云盘签到日志\n\n')
+sio = StringIO('天翼云盘签到日志\n\n')
 sio.seek(0, 2)  # 将读写位置移动到结尾
 tz = pytz.timezone('Asia/Shanghai')
 nowtime = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
@@ -65,7 +65,7 @@ def main(arg1,arg2):
     if(response.json()['isSign'] == "false"):
         sio.write(f"签到提示：未签到，获得{netdiskBonus}M\n\n")
     else:
-        sio.write(f"签到提示：已签到，已获得{netdiskBonus}M\n\n")
+        sio.write(f"签到提示：已签到，获得{netdiskBonus}M\n\n")
     headers = {
         'User-Agent':'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
         "Referer" : "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -191,12 +191,12 @@ def login(username, password):
 # 微信推送
 def pushWechat(desp):
     if '失败' in desp :
-        send_message('Chlorine’s 天翼云盘签到失败！')
-    else: 
-        send_message(desp)
+        desp='天翼云盘签到失败！\n\n'
+    desp+='From'+str(username)[-4:-1]     
+    send_message(desp)
 
 if __name__ == "__main__":
     arg1 = 0
     arg2 = 0
-    time.sleep(sleep_time*60)
+    time.sleep(sleep_time)
     main(arg1,arg2)
