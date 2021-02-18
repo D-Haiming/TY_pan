@@ -192,11 +192,11 @@ def login(username, password):
 def pushWechat(desp):
     if '失败' in desp :
         desp='天翼云盘签到失败！\n\n'
-    desp+='From'+str(username)[-4:-1]     
+    desp+='From  '+str(username)[-4:]     
     send_message(desp)
 
 if __name__ == "__main__":
     arg1 = 0
     arg2 = 0
-    time.sleep(sleep_time)
+    time.sleep(sleep_time*60)
     main(arg1,arg2)
